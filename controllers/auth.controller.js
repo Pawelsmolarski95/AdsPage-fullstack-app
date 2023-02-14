@@ -12,10 +12,9 @@ exports.register = async (req, res) => {
     ) {
       const userWithLogin = await User.findOne({ login });
       if (userWithLogin) {
-        return (
-        res
+        return res
           .status(409)
-          .send({ message: "User with this login already exists" }));
+          .send({ message: "User with this login already exists" });
       }
       const newUser = await User.create({
         login,
@@ -29,6 +28,29 @@ exports.register = async (req, res) => {
     res.status(500).json({ message: err });
   }
 };
+
 exports.login = async (req, res) => {
-  res.send("Working");
+  try {
+    const { login, password } = req.body;
+
+    if (
+      login &&
+      typeof login === "string" &&
+      password &&
+      typeof password === "string"
+    ) {
+      const loginUser = await User.findOne({ login });
+      if (!loginUser) {
+        res.status(400).send({ message: "Login or password are incorrect" });
+      } else {
+        if (bcrypt.compareSync(password, loginUser.password)) {
+          res.status(200).send({ message: "Login successful" });
+        } else {
+            res.status(400).send({ message: "Login or password are incorrect" });
+        }
+      }
+    }
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
 };
