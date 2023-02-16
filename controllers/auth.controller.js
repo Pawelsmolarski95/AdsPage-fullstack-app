@@ -1,16 +1,24 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
-
+const getImageFileType = require("../utlis/getImageFileType");
 
 exports.register = async (req, res) => {
   try {
     const { login, password } = req.body;
+    const fileType = req.file ? await getImageFileType(req.file) : null;
+
     if (
       login &&
       typeof login === "string" &&
       password &&
-      typeof password === "string"
+      typeof password === "string" &&
+      req.file &&
+      ["image/jpeg", "image/png", "image/jpg"].includes(fileType)
     ) {
+      const [, ext] = req.file.originalname.split(".");
+      if (ext !== "png" && ext !== "jpg" && ext !== "jpeg") {
+        return res.status(400).send({ message: "Invalid file type" });
+      }
       const userWithLogin = await User.findOne({ login });
       if (userWithLogin) {
         return res
@@ -20,6 +28,7 @@ exports.register = async (req, res) => {
       const newUser = await User.create({
         login,
         password: await bcrypt.hash(password, 10),
+        avatar: req.file.filename,
       });
       res.status(201).send({ message: "User created: " + newUser.login });
     } else {
@@ -48,7 +57,7 @@ exports.login = async (req, res) => {
           req.session.id = loginUser.id;
           res.status(200).send({ message: "Login successful" });
         } else {
-            res.status(400).send({ message: "Login or password are incorrect" });
+          res.status(400).send({ message: "Login or password are incorrect" });
         }
       }
     }
@@ -58,10 +67,10 @@ exports.login = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  res.send({ message: 'You are logged!' });
+  res.send({ message: "You are logged!" });
 };
 
 exports.logout = async (req, res) => {
   req.session.destroy();
-  res.send({ message: 'You are logout!' });
+  res.send({ message: "You are logout!" });
 };
