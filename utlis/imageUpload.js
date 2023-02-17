@@ -10,9 +10,12 @@ const storage = multer.diskStorage({
     }
 });
 
+const maxSize = 1024 * 1024 * 5; // 5MB
 
-const imageUpload = multer({  storage });
-
+const imageUpload = multer({
+    storage: storage,
+    limits: { fileSize: maxSize }
+});
 
 module.exports = imageUpload;
 
