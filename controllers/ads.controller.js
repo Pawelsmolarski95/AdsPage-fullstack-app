@@ -28,6 +28,7 @@ exports.addAds = async (req, res) => {
   try {
     const { title, description, data, price, location, infoSeller } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : "unknown";
+    const user = req.session.user;
 
     if (
       title &&
@@ -51,6 +52,7 @@ exports.addAds = async (req, res) => {
         location: location,
         infoSeller: infoSeller,
         image: req.file ? req.file.filename : "unknown",
+        user: user.id,
       });
       await newAds.save();
       res.json({ message: "Created ads:" + newAds.title });
@@ -60,6 +62,7 @@ exports.addAds = async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ message: err });
+    fs.unlinkSync(`./public/uploads/${req.file.filename}`);
   }
 };
 
@@ -78,31 +81,43 @@ exports.removeAds = async (req, res) => {
 };
 
 exports.editAds = async (req, res) => {
-  try {
-    const { title, description, data, price, location, infoSeller } = req.body;
-    const fileType = req.file ? await getImageFileType(req.file) : "unknown";
-    const editedAds = await Ads.findById(req.params.id);
-    console.log(editedAds, req.file) ;
-    
-    if (!editedAds) {
-      res.status(404).json({ message: "Not found" });
-    } else {
-      editedAds.title = title;
-      editedAds.description = description;
-      editedAds.data = data ? Date.now() : editedAds.data;
-      editedAds.price = price;
-      editedAds.location = location;
-      editedAds.infoSeller = infoSeller;
-      if (req.file && ['image/png', 'image/jpeg', 'image/gif'].includes(fileType)) {
-        editedAds.image = req.file.filename;
+    try {
+      const { title, description, data, price, location, infoSeller } = req.body;
+      const fileType = req.file ? await getImageFileType(req.file) : "unknown";
+      const editedAds = await Ads.findById(req.params.id);
+      console.log(editedAds, req.file, req.body) ;
+      
+      if (
+        req.file &&
+        ['image/png', 'image/jpeg', 'image/gif'].includes(fileType)
+      ) {
+        const imagePath = `public/uploads/${editedAds.image}`;
+        console.log(imagePath);
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
+        image = req.file.filename;
       }
-      await editedAds.save();
+      
+      if (!editedAds) {
+        res.status(404).json({ message: "Not found" });
+      } else {
+        editedAds.title = title;
+        editedAds.description = description;
+        editedAds.data = data ? Date.now() : editedAds.data;
+        editedAds.price = price;
+        editedAds.location = location;
+        editedAds.infoSeller = infoSeller;
+        editedAds.image = image;
+        
+        
+        await editedAds.save();
+      }
+      res.json({ message: "Correctly change ads" });
+    } catch (err) {
+      res.status(500).json({ message: err });
     }
-    res.json({ message: "Correctly change ads" });
-  } catch (err) {
-    res.status(500).json({ message: err });
-  }
-};
+  };
 
 exports.findSearchAds = async (req, res) => {
   try {
