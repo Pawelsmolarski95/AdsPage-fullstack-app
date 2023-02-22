@@ -12,8 +12,6 @@ import { FaBars } from "react-icons/fa";
 import "./MainMenu.scss";
 import { useState } from "react";
 
-import Logo from "../../common/Logo/Logo";
-
 const MainMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,7 +23,7 @@ const MainMenu = () => {
     <div>
       <Navbar expand="md" className="animated fadeIn">
         <NavbarBrand href="/">
-          <Logo />
+          <h1>YourAds</h1>
         </NavbarBrand>
         <NavbarToggler className="position-absolute" onClick={toggle}>
           <FaBars />
@@ -33,10 +31,7 @@ const MainMenu = () => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto align-items-center" navbar>
             <NavItem>
-              <NavLink href="/">Browse</NavLink>
-            </NavItem>
-            <NavItem className="d-block d-md-none d-xl-block">
-              <NavLink href="/privacy-policy">Privacy Policy</NavLink>
+              <NavLink href="/">Advertisements</NavLink>
             </NavItem>
             <NavItem className="d-block d-md-none d-xl-block">
               <NavLink href="/terms-of-use">Term of use</NavLink>
@@ -44,7 +39,7 @@ const MainMenu = () => {
             <NavItem>
               <NavLink href="/submit">
                 <Button className="btn-pill" outline color="primary">
-                  Submit Photo
+                  Add new ads
                 </Button>
               </NavLink>
             </NavItem>
