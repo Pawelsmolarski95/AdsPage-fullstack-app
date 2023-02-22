@@ -88,39 +88,61 @@ exports.removeAds = async (req, res) => {
 exports.editAds = async (req, res) => {
   try {
     const { title, description, data, price, location, infoSeller } = req.body;
-    if ( title && typeof title === "string" && description && typeof description === "string" && price && typeof price && typeof price !== "string" && data && typeof data === "string" && location && typeof location === "string" && infoSeller && typeof infoSeller === "string" && title.length > 5 && title.length < 50 && description.length ) {
-    const fileType = req.file ? await getImageFileType(req.file) : "unknown";
-    const editedAds = await Ads.findById(req.params.id);
-
     if (
-      req.file &&
-      ["image/png", "image/jpeg", "image/gif"].includes(fileType)
+      title &&
+      typeof title === "string" &&
+      description &&
+      typeof description === "string" &&
+      price &&
+      typeof price &&
+      typeof price !== "string" &&
+      data &&
+      typeof data === "string" &&
+      location &&
+      typeof location === "string" &&
+      infoSeller &&
+      typeof infoSeller === "string" &&
+      title.length > 5 &&
+      title.length < 50 &&
+      description.length
     ) {
-      const imagePath = `public/uploads/${editedAds.image}`;
+      const fileType = req.file ? await getImageFileType(req.file) : "unknown";
+      const editedAds = await Ads.findById(req.params.id);
 
-      if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath);
+      if (
+        req.file &&
+        ["image/png", "image/jpeg", "image/gif"].includes(fileType)
+      ) {
+        const imagePath = `public/uploads/${editedAds.image}`;
+
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
+        image = req.file.filename;
       }
-      image = req.file.filename;
-    }
 
-    if (!editedAds) {
-      res.status(404).json({ message: "Not found" });
+      if (!editedAds) {
+        res.status(404).json({ message: "Not found" });
+      } else {
+        editedAds.title = title;
+        editedAds.description = description;
+        editedAds.data = data ? Date.now() : editedAds.data;
+        editedAds.price = price;
+        editedAds.location = location;
+        editedAds.infoSeller = infoSeller;
+        editedAds.image = image;
+
+        await editedAds.save();
+      }
+      res.json({ message: "Correctly change ads" });
     } else {
-      editedAds.title = title;
-      editedAds.description = description;
-      editedAds.data = data ? Date.now() : editedAds.data;
-      editedAds.price = price;
-      editedAds.location = location;
-      editedAds.infoSeller = infoSeller;
-      editedAds.image = image;
-
-      await editedAds.save();
+      res
+        .status(400)
+        .json({
+          message:
+            "Check length your title and description and rest of inputs ",
+        });
     }
-    res.json({ message: "Correctly change ads" });
-  } else {
-    res.status(400).json({ message: "Check length your title and description and rest of inputs " });
-  }
   } catch (err) {
     res.status(500).json({ message: err });
   }
