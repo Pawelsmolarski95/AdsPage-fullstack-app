@@ -36,7 +36,7 @@ const MainMenu = () => {
             navbar
           >
             <NavItem className="mx-5">
-              <NavLink href="/api/ads">Advertisements</NavLink>
+              <NavLink href="/">Advertisements</NavLink>
             </NavItem>
             <NavItem className=" mx-5 d-block d-md-none d-xl-block">
               <NavLink href="/terms-of-use">Term of use</NavLink>

@@ -1,0 +1,21 @@
+
+.searchContainer {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: flex-end;
+    
+}
+
+.search {
+    margin-right: 3rem;
+    border-radius: 1rem;
+    padding-left: 1rem;
+}
+
+.spinner {
+    position: absolute;
+    z-index: 2;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
