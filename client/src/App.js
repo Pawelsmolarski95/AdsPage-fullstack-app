@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import MainSingleAds from "./components/features/MainSingleAds/MainSingleAds";
 
@@ -6,9 +8,15 @@ import AddAds from "./components/pages/AddAds/AddAds";
 import Advertisements from "./components/pages/Advertisements/Advertisements";
 import Login from "./components/pages/Login/Login";
 import Register from "./components/pages/Register/Register";
-
+import { checkLoginRequest } from "./redux/usersRedux";
 
 const App = () => {
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(checkLoginRequest());
+  // }, [dispatch]);
+
   return (
     <div>
       <MainLayout>

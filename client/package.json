@@ -11,9 +11,12 @@
     "bootstrap": "^5.2.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
+    "react-datepicker": "^4.10.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.2",
     "react-icons": "^4.7.1",
     "react-loader-spinner": "^5.3.4",
+    "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
@@ -23,6 +26,7 @@
     "redux-thunk": "^2.4.1",
     "sass": "^1.58.3",
     "shards-ui": "^3.0.0",
+    "thunk": "^0.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
