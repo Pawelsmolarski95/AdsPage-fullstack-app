@@ -1,157 +1,119 @@
-import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
+import Spinner from 'react-bootstrap/Spinner';
 import { useState } from 'react';
-import { Button, Form, Spinner, Row, Col } from 'react-bootstrap';
-import { Alert, Progress } from 'reactstrap';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { addRegistrationRequest, getRequest } from '../../../redux/usersRedux';
-import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../../../config';
+
 
 const Register = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
   const [avatar, setAvatar] = useState(null);
-  const [telephone, setTelephone] = useState('');
-  const [avatarError, setAvatarError] = useState(false);
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState(null); // null, success, serverError, clientError, loginInUse, loading
 
-  const request = useSelector(getRequest);
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const fd = new FormData();
+  fd.append('login', login);
+  fd.append('password', password);
+  fd.append('phone', phone);
+  fd.append('avatar', avatar);
 
-  const {
-    register,
-    handleSubmit: validate,
-    formState: { errors },
-  } = useForm();
-
-  const handleSubmit = () => {
-    setAvatarError(!avatar);
-
-    const fd = new FormData();
-    fd.append('login', login);
-    fd.append('password', password);
-    fd.append('avatar', avatar);
-    fd.append('telephone', telephone);
-
-    if (avatar) {
-      setStatus(true);
-      dispatch(addRegistrationRequest(fd));
-      setAvatarError('');
-      setLogin('');
-      setPassword('');
-      setAvatar('');
-      setTelephone('');
-    }
+  const options = {
+    method: 'POST',
+    body: fd,
   };
-
-  if (request.success && status) {
-    setTimeout(() => {
-      navigate('/');
-      window.location.reload();
-      setStatus(false);
-    }, 3000);
-  }
+  setStatus('loading');
+  fetch(`${API_URL}/auth/register`, options)
+    .then(res => {
+      if (res.status === 201) {
+        setStatus('success');
+      } else if (res.status === 400) {
+        setStatus('clientError');
+      } else if (res.status === 409) {
+        setStatus('loginInUse');
+      } else {
+        setStatus('serverError');
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      setStatus('serverError');
+    });
+}
 
   return (
-    <Form
-      onSubmit={validate(handleSubmit)}
-      className='mb-5 col-md-8 mx-auto my-4'
-      encType='multipart/form-data'
-    >
-      <h1 className='my-4'>Sign Up</h1>
+    <div>
+      <Form className='col-12 col-sm-3 mx-auto' onSubmit={handleSubmit}>
+        <h1 style={{ color: '#111947' }}>Sign up</h1>
 
-      {request && request.pending && (
-        <Progress animated color='primary' value={50} />
-      )}
-      {request && request.error && status && (
-        <Alert color='danger'>{request.error}</Alert>
-      )}
-      {request && request.success && status && (
-        <Row className='mb-3'>
-          <Col className='col-10 align-self-center'>
-            <Alert className='m-0' color='success'>
-              You have been Successfully registered! Redirecting...
-            </Alert>
-          </Col>
-          <Col className='col-2 align-self-center'>
-            <Spinner animation='border' role='status'>
-              <span className='visually-hidden'>Loading...</span>
-            </Spinner>
-          </Col>
-        </Row>
-      )}
-
-      <Form.Group className='mb-4 col-md-6' controlId='formLogin'>
-        <Form.Label>Login</Form.Label>
-        <Form.Control
-          {...register('login', { required: true })}
-          type='text'
-          value={login}
-          onChange={(e) => setLogin(e.target.value)}
-          placeholder='Login'
-        />
-        {errors.login && (
-          <small className='d-block form-text text-danger mt-2'>
-            Login can't be empty.
-          </small>
+        {/* ******* Alerts ******* */}
+        {status === 'success' && (
+          <Alert variant='success' >
+            <Alert.Heading>Success</Alert.Heading>
+            <p>You have successfully registered!</p>
+            <p>You can now log in...</p>
+          </Alert>
         )}
-      </Form.Group>
 
-      <Form.Group className='mb-4 col-md-6' controlId='formPassword'>
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          {...register('password', { required: true })}
-          type='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder='Password'
-        />
-        {errors.password && (
-          <small className='d-block form-text text-danger mt-2'>
-            Password can't be empty.
-          </small>
+        {status === 'serverError' && (
+          <Alert variant='danger' >
+            <Alert.Heading>Something went wrong...</Alert.Heading>
+            <p>Unexpected error... Try again!</p>
+          </Alert>
         )}
-      </Form.Group>
 
-      <Form.Group className='mb-4 col-md-6' controlId='formAvatar'>
-        <Form.Label>Avatar</Form.Label>
-        <Form.Control
-          type='file'
-          onChange={(e) => setAvatar(e.target.files[0])}
-        />
-        {avatarError && (
-          <small className='d-block form-text text-danger mt-2'>
-            Avatar is required.
-          </small>
+        {status === 'clientError' && (
+          <Alert variant='warning' >
+            <Alert.Heading>Not enough data</Alert.Heading>
+            <p>You have to fill all the fields</p>
+          </Alert>
         )}
-      </Form.Group>
 
-      <Form.Group className='mb-4 col-md-6' controlId='formTelephone'>
-        <Form.Label>Phone Number</Form.Label>
-        <Form.Control
-          {...register('telephone', { required: true })}
-          type='tel'
-          value={telephone}
-          onChange={(e) => setTelephone(e.target.value)}
-          placeholder='Telephone'
-        />
-        {errors.password && (
-          <small className='d-block form-text text-danger mt-2'>
-            Telephone can't be empty.
-          </small>
+        {status === 'loginInUse' && (
+          <Alert variant='danger' >
+            <Alert.Heading>Login already in use...</Alert.Heading>
+            <p>Plis, use other login.</p>
+          </Alert>
         )}
-      </Form.Group>
 
-      <Button variant='success' type='submit'>
-        Sign Up
-      </Button>
-      <br></br>
-      <br></br>
-     
-    </Form>
-  );
-};
+        {/* ****** Spinner ******* */}
+        
+        {status === 'loading' && (
+        <Spinner animation='border' variant='secondary' role='status'>
+            <span className='visually-hidden'>Loading...</span>
+        </Spinner>
+        )}
 
+        {/* ****** Form fields ******* */}
+        <Form.Group className='mb-3' controlId='formLogin'>
+          <Form.Label>Login</Form.Label>
+          <Form.Control type='text' placeholder='Enter login' value={ login } onChange={ e => setLogin(e.target.value)}/>
+        </Form.Group>
+
+        <Form.Group className='mb-3' controlId='formPassword'>
+          <Form.Label>Password</Form.Label>
+          <Form.Control type='password' placeholder='Password' value={ password } onChange={ e => setPassword(e.target.value)}/>
+        </Form.Group>
+
+        <Form.Group className='mb-3' controlId='formPhone'>
+          <Form.Label>Phone</Form.Label>
+          <Form.Control type='tel' placeholder='Phone number' value={ phone } onChange={ e => setPhone(e.target.value)}/>
+        </Form.Group>
+
+        <Form.Group className='mb-3' controlId='formFile'>
+          <Form.Label>Avatar</Form.Label>
+          <Form.Control type='file' onChange={ e => setAvatar(e.target.files[0]) }/>
+        </Form.Group>
+
+        <Button variant='secondary' type='submit'>Join!</Button>
+        
+      </Form>
+    </div>
+    );
+}
+ 
 export default Register;

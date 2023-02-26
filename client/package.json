@@ -26,6 +26,7 @@
     "redux-thunk": "^2.4.1",
     "sass": "^1.58.3",
     "shards-ui": "^3.0.0",
+    "shortid": "^2.2.16",
     "thunk": "^0.0.1",
     "web-vitals": "^2.1.4"
   },

@@ -3,6 +3,11 @@ import thunk from "redux-thunk";
 import adsReducer from "./adsRedux";
 import usersReducer from "./usersRedux";
 
+const initialState = {
+    ads: [],
+    users: null
+  };
+
 const subreducers = {
   ads: adsReducer,
   users: usersReducer,
@@ -11,6 +16,7 @@ const subreducers = {
 const reducer = combineReducers(subreducers);
 const store = createStore(
   reducer,
+  initialState,
   compose(
     applyMiddleware(thunk),
     window.__REDUX_DEVTOOLS_EXTENSION__
