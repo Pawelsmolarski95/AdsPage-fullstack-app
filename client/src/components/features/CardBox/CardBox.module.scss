@@ -1,0 +1,21 @@
+@import '../../../styles/settings.scss';
+
+.card_wrapper {
+  background-color: darken($color-dark, 3%);
+  border-style: none;
+  height: 100%;
+}
+
+.body {
+  height: 11rem;
+}
+
+.card_image {
+  height: 12rem;
+  object-fit: cover;
+}
+
+h3 {
+  color: $color-warning;
+  margin-left: 1rem;
+}

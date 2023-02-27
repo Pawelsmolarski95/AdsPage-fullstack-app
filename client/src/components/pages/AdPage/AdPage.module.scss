@@ -1,0 +1,6 @@
+@import '../../../styles/settings.scss';
+
+.card_wrapper {
+  background-color: darken($color-dark, 3%);
+  border-style: none;
+}

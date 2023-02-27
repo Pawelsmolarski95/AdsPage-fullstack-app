@@ -1,29 +1,36 @@
 //selectors
+export const getUser = ({ users }) => users;
 
-export const getUser = state => state.users;
+// export const getUserById = ({ users }, userId) =>
+//   users.data.find((user) => user._id === userId);
+
+/* ACTIONS */
 
 //actions
-const createActionName = actionName => `app/users/${actionName}`;
+const reducerName = 'users';
+// eslint-disable-next-line no-unused-vars
+const createActionName = (actionName) => `app/${reducerName}/${actionName}`;
 const LOG_IN = createActionName('LOG_IN');
 const LOG_OUT = createActionName('LOG_OUT');
 
-//action creators
-export const logIn = payload => ({ payload, type: LOG_IN });
-export const logOut = payload => ({ payload, type: LOG_OUT });
+// actions creators
+export const logIn = (payload) => ({
+  type: LOG_IN,
+  payload,
+});
 
+export const logOut = () => ({
+  type: LOG_OUT,
+});
+/* REDUCER */
 
-//reducer
-const usersReducer = (statePart = null, action) => {
-  
+export default function usersReducer(statePart = null, action) {
   switch (action.type) {
-    case LOG_IN: 
-      return action.payload; 
+    case LOG_IN:
+      return action.payload;
     case LOG_OUT:
       return null;
     default:
       return statePart;
   }
-
 }
-
-export default usersReducer;
