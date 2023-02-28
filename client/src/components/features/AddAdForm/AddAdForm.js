@@ -17,7 +17,7 @@ const AddAdForm = () => {
     formData.append('description', ad.description);
     formData.append('price', ad.price);
     formData.append('image', ad.image);
-    formData.append('localization', ad.localization);
+    formData.append('location', ad.location);
     formData.append('date', ad.date);
     formData.append('user', ad.user);
     formData.append('phone', ad.phone);
@@ -25,7 +25,7 @@ const AddAdForm = () => {
       method: 'POST',
       body: formData,
     };
-    fetch(`${API_URL}api/ads`, options);
+    fetch(`${API_URL}/ads`, options);
     dispatch(fetchData());
     navigate('/');
   };

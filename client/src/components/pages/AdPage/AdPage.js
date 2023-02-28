@@ -11,7 +11,6 @@ import { IMAGES_URL } from '../../../config';
 import { getUser } from '../../../redux/usersRedux';
 import { removeAd } from '../../../redux/adsRedux';
 import ModalDelete from '../../features/ModalDelete/ModalDelete';
-import { dateToString } from '../../../utils/dateToString';
 import { format } from 'date-fns';
 
 const AdPage = () => {
@@ -19,7 +18,7 @@ const AdPage = () => {
   const { adId } = useParams();
   const adData = useSelector((state) => getAdById(state, adId));
   const user = useSelector(getUser);
-  const formatDate = format(new Date(),'yyyy/mm/dd')
+  const formatDate = format(new Date(),"MMMM do, yyyy H:mma")
 
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
@@ -59,10 +58,10 @@ const AdPage = () => {
               <Card.Text>{adData.description}</Card.Text>
               <Card.Text>Published: {formatDate}</Card.Text>
               <Card.Text>Author: {adData.infoSeller}</Card.Text>
-              <Card.Text>Phone number: {adData.phone}</Card.Text>
+              <Card.Text>Phone: {adData.phone}</Card.Text>
             </Card.Body>
              {user && (
-          <Col xs='12' lg='12' className='d-flex align-items-centre justify-content-center mb-3'>
+          <Col xs='12' lg='12' className='text-center mb-3'>
             <Link to={'/ad/edit/' + adId}>
               <Button variant='outline-info' className='m-2'>
                 Edit
