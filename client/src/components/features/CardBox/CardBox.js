@@ -20,12 +20,12 @@ const CardBox = ({ title, price, location, image, _id, user }) => {
       />
       <Card.Body>
         <div className={styles.body}>
-          <Card.Title class="d-flex align-items-center"><h4>Price:</h4><h3 className={styles.h3}>  {price}$</h3></Card.Title>
+          <Card.Title className='d-flex align-items-baseline '>Price: <span className={styles.span}><b> {price}$</b></span> </Card.Title>
           <Card.Subtitle className='my-3'>
             <b>{title}</b>
           </Card.Subtitle>
           <Card.Text className='mb-3'>
-            <b>Localization: {location}</b>
+            <b>Location: {location}</b>
           </Card.Text>
         </div>
         <Row>

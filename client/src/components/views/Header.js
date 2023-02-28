@@ -11,7 +11,7 @@ const Header = () => {
     <nav>
       <div className={styles.nav_wrapper}>
         <NavLink to='/' className={styles.logo}>
-          <h2>YourAds <TfiNotepad/></h2>
+        <h2>Your<span className={styles.span}>Ads</span> <TfiNotepad/></h2>
         </NavLink>
         <ul className={styles.nav_list}>
           <li>
@@ -32,7 +32,7 @@ const Header = () => {
                 }
                 to='/login'
               >
-                Sign in
+                Login
               </NavLink>
             )}
           </li>
@@ -44,7 +44,7 @@ const Header = () => {
                 }
                 to='/register'
               >
-                Register
+                Sign up
               </NavLink>
             )}
           </li>

@@ -28,7 +28,7 @@ const Register = () => {
     };
 
     setStatus('loading');
-    fetch(`${API_URL}auth/register`, options).then((res) => {
+    fetch(`${API_URL}/auth/register`, options).then((res) => {
       if (res.status === 201) {
         setStatus('success');
       } else if (res.status === 400) {
@@ -42,12 +42,9 @@ const Register = () => {
   };
 
   return (
-    <Form className='col-12 col-sm-3 mx-auto mt-3' onSubmit={handleSubmit}>
-      <h1 className='my-4'>Sign up</h1>
-      <p className='mb-3'>
-        For demo purpose you can just sign in with login: JohnDoe and password:
-        test3
-      </p>
+    <Form className='col-12 col-sm-3 col-lg-6 mx-auto mt-3' onSubmit={handleSubmit}>
+      <h1 className='my-4 text-dark'>Sign up</h1>
+      
       {status === 'success' && (
         <Alert variant='success'>
           <Alert.Heading>Success!</Alert.Heading>

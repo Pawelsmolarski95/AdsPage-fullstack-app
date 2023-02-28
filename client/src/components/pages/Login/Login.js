@@ -28,7 +28,7 @@ const Login = () => {
       body: JSON.stringify({ login, password }),
     };
     setStatus('loading');
-    fetch(`${API_URL}auth/login`, options)
+    fetch(`${API_URL}/auth/login`, options)
       .then((res) => {
         if (res.status === 200) {
           setStatus('success');
@@ -47,10 +47,10 @@ const Login = () => {
       });
   };
 
-  return (
-    <Form className='col-12 col-sm-3 mx-auto mt-3' onSubmit={handleSubmit}>
-      <h1 className='my-4'>Sign up</h1>
-      <p className='mb-3'>
+  return ( 
+    <Form className='col-12 col-sm-3 col-lg-5 mx-auto mt-3' onSubmit={handleSubmit}>
+      <h1 className='my-4 text-dark'>Login</h1>
+      <p className='mb-3 text-dark'>
         For demo purpose you can just sign in with login: admin and password:
         admin
       </p>

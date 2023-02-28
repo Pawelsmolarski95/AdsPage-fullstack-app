@@ -7,8 +7,14 @@ nav {
 .logo {
   text-decoration: none;
   color: $color-light;
+  letter-spacing: 1px;
   &:hover {
     color: $color-light;
+  }
+
+  .span {
+    color: $color-warning;
+    font-weight: 700;
   }
 }
 
@@ -19,13 +25,18 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: $base-size;
 }
 
 .nav_list {
   list-style: none;
   display: inline-flex;
+  margin: 0;
+  
   li {
     padding: $base-size;
+    letter-spacing: 2px;
+    font-weight: 400;
   }
 
   a {

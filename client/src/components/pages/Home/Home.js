@@ -11,7 +11,6 @@ import { getUser } from '../../../redux/usersRedux';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import styles from './Home.module.scss';
 
 const Home = () => {
   const ads = useSelector(getAllAds);
@@ -30,9 +29,9 @@ const Home = () => {
   }
   return (
     <div>
-      <Row className=' d-flex justify-content-end align-items-center my-5'>
+      <Row className='justify-content-end align-items-center my-5'>
         <Col className=''>
-          <h1 className={styles.h1}> Advertisements</h1>
+          <h1 className='text-dark'> <b>Advertisements</b> </h1>
         </Col>
         <Col>
           <Form className='d-flex'>

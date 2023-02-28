@@ -11,14 +11,15 @@ import { IMAGES_URL } from '../../../config';
 import { getUser } from '../../../redux/usersRedux';
 import { removeAd } from '../../../redux/adsRedux';
 import ModalDelete from '../../features/ModalDelete/ModalDelete';
+import { dateToString } from '../../../utils/dateToString';
+import { format } from 'date-fns';
 
 const AdPage = () => {
   const dispatch = useDispatch();
   const { adId } = useParams();
   const adData = useSelector((state) => getAdById(state, adId));
   const user = useSelector(getUser);
-  console.log(user);
-  // const formatDate = adData.date.slice(0, 10).replace(/-/g, '/') || '';
+  const formatDate = format(new Date(),'yyyy/mm/dd')
 
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
@@ -43,27 +44,25 @@ const AdPage = () => {
   return (
     <div>
       <Row className='d-flex justify-content-center mt-5'>
-        <Col xs='12' lg='5'>
+        <Col xs='12' lg='7' >
           <Card className={styles.card_wrapper}>
-            <Card.Img variant='top' src={IMAGES_URL + adData.image} />
+            <Card.Img  styles={{ height: '20rem'}} variant='top' src={IMAGES_URL + adData.image} />
 
             <Card.Body>
-              <Card.Title className='mb-3'>Price: {adData.price}$</Card.Title>
+              <Card.Title className='mb-3'>Price: <span className={styles.price}>{adData.price}$</span> </Card.Title>
               <Card.Subtitle className='mb-3'>
-                <b>Title: {adData.title}</b>
+                <b>Title: <span className={styles.title}>{adData.title}</span> </b>
               </Card.Subtitle>
               <Card.Text className='mb-3'>
-                <b>Localization: {adData.location}</b>
+                <b>Location: {adData.location}</b>
               </Card.Text>
               <Card.Text>{adData.description}</Card.Text>
-              {/* <Card.Text>Published: {formatDate}</Card.Text> */}
+              <Card.Text>Published: {formatDate}</Card.Text>
               <Card.Text>Author: {adData.infoSeller}</Card.Text>
               <Card.Text>Phone number: {adData.phone}</Card.Text>
             </Card.Body>
-          </Card>
-        </Col>
-        { user && (
-          <Col xs='12' lg='4'>
+             {user && (
+          <Col xs='12' lg='12' className='d-flex align-items-centre justify-content-center mb-3'>
             <Link to={'/ad/edit/' + adId}>
               <Button variant='outline-info' className='m-2'>
                 Edit
@@ -74,6 +73,10 @@ const AdPage = () => {
             </Button>
           </Col>
         )}
+          </Card>
+         
+        </Col>
+        
       </Row>
     </div>
   );

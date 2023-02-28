@@ -25,7 +25,7 @@ export const searchAd = (searchPhrase) => ({
 
 export const fetchData = () => {
   return (dispatch) => {
-    fetch(API_URL + 'api/ads')
+    fetch(API_URL + '/ads')
       .then((res) => res.json())
 
       .then((ads) => dispatch(updateAds(ads)));
@@ -34,7 +34,7 @@ export const fetchData = () => {
 
 export const fetchAdvertBySearchPhrase = (searchPhrase) => {
   return (dispatch) => {
-    fetch(API_URL + 'api/ads/search/' + searchPhrase)
+    fetch(API_URL + '/ads/search/' + searchPhrase)
       .then((res) => res.json())
       .then((ads) => dispatch(updateAds(ads)));
     dispatch(searchAd(searchPhrase));

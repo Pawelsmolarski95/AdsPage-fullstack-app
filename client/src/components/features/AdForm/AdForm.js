@@ -15,7 +15,7 @@ const AdForm = ({ action, actionText, ...props }) => {
   const id = props.id;
   const [price, setPrice] = useState(props.price || '');
   const [title, setTitle] = useState(props.title || '');
-  const [localization, setLocalization] = useState(props.localization || '');
+  const [location, setLocation] = useState(props.location || '');
   const [description, setDescription] = useState(props.description || '');
   const [date, setDate] = useState(props.date || newDate);
   const [image, setImage] = useState(props.image || '');
@@ -35,7 +35,7 @@ const AdForm = ({ action, actionText, ...props }) => {
         user: user.login,
         date: newDate,
         description,
-        localization,
+        location,
         id,
         image,
         phone,
@@ -46,7 +46,7 @@ const AdForm = ({ action, actionText, ...props }) => {
 
   return (
     <Form
-      className='col-12 col-sm-3 mx-auto mt-3'
+      className='col-12 col-sm-3 col-lg-6 mx-auto mt-3'
       onSubmit={validate(handleSubmit)}
     >
       <h1 className='my-4'>{actionText}</h1>
@@ -85,17 +85,17 @@ const AdForm = ({ action, actionText, ...props }) => {
           </small>
         )}
       </Form.Group>
-      <Form.Group className='mb-3' controlId='formLocalization'>
-        <Form.Label>Localization</Form.Label>
+      <Form.Group className='mb-3' controlId='formLocation'>
+        <Form.Label>Location</Form.Label>
         <Form.Control
-          {...register('localization', {
+          {...register('location', {
             required: true,
             minLength: 2,
           })}
-          value={localization}
+          value={location}
           type='text'
-          placeholder='Enter localization'
-          onChange={(e) => setLocalization(e.target.value)}
+          placeholder='Enter location'
+          onChange={(e) => setLocation(e.target.value)}
         />
         {errors.localization && (
           <small className='d-block form-text text-danger mt-2'>

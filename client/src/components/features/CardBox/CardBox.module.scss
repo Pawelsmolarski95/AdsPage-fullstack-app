@@ -7,7 +7,7 @@
 }
 
 .body {
-  height: 11rem;
+  height: 12rem;
 }
 
 .card_image {
@@ -15,7 +15,8 @@
   object-fit: cover;
 }
 
-h3 {
-  color: $color-warning;
-  margin-left: 1rem;
+.span {
+  color: $color-favorite-icon;
+  font-size: 26px;
+  margin-left: 1rem ;
 }
