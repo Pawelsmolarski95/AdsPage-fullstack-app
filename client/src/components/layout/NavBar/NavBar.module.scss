@@ -9,7 +9,7 @@ nav {
   text-decoration: none;
   color: $color-light;
   letter-spacing: 1px;
-  margin-left: 10px;
+  margin-left: 40px;
   margin-right: 440px;
   &:hover {
     color: $color-light;
@@ -24,5 +24,6 @@ nav {
 @media only screen and (max-width: 768px) {
   .logo {
     margin-right: 0;
+    margin-left: 0;
   }
 }
