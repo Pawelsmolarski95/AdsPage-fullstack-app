@@ -13,7 +13,9 @@ const AdAdd = () => {
     fd.append("image", ad.image);
     fd.append("location", ad.location);
     fd.append("data", ad.data);
-    fd.append("seller", ad.seller);
+    fd.append("infoSeller", ad.infoSeller);
+
+    console.log(fd)
 
     const options = {
       method: "POST",

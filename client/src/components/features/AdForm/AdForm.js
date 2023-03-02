@@ -9,7 +9,7 @@ const AdForm = ({ action, actionText, ...props }) => {
   const [title, setTitle] = useState(props.title || "");
   const [description, setDescription] = useState(props.description || "");
   const [data, setData] = useState(new Date() || "");
-  const [image, setImage] = useState(props.photo || "");
+  const [image, setImage] = useState(props.image || "");
   const [price, setPrice] = useState(props.price || "");
   const [location, setLocation] = useState(props.location || "");
   const [infoSeller, setInfoSeller] = useState(props.infoSeller || "");
@@ -24,7 +24,7 @@ const AdForm = ({ action, actionText, ...props }) => {
       image,
       price,
       location,
-      infoSeller,
+      infoSeller: user.login ? user.login : "John Doe",
       id,
     });
   };
@@ -46,6 +46,8 @@ const AdForm = ({ action, actionText, ...props }) => {
             <Form.Control
               className="mb-2"
               type="text"
+              as='textarea'
+              rows='5'
               placeholder="Enter description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}

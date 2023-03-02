@@ -72,7 +72,8 @@ const Login = () => {
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       )}
-
+      <h5 className="text-center">For demo purpose you can just sign in with login: test1 and password:
+        test1</h5>
       <Form.Group className="mb-3" controlId="formLogin">
         <Form.Label>Login</Form.Label>
         <Form.Control

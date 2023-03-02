@@ -9,23 +9,23 @@ const AdEdit = () => {
   const { id } = useParams();
   const adData = useSelector((state) => getAdById(state, id));
   const navigate = useNavigate();
-
+  console.log(adData)
   const handleSubmit = (ad) => {
     const fd = new FormData();
     fd.append("title", ad.title);
     fd.append("description", ad.description);
     fd.append("price", ad.price);
-    fd.append("photo", ad.photo);
+    fd.append("image", ad.image);
     fd.append("location", ad.location);
-    fd.append("publicationDate", ad.publicationDate);
-    fd.append("seller", ad.seller);
+    fd.append("data", ad.data);
+    fd.append("infoSeller", ad.infoSeller);
 
     const options = {
       method: "PUT",
       body: fd,
       credentials: "include",
     };
-    fetch(`${API_URL}/api/ads/${id}`, options)
+    fetch(`${API_URL}/ads/edit/${id}`, options)
       .then(() => {
         navigate("/");
       })
@@ -43,11 +43,11 @@ const AdEdit = () => {
           actionText="Edit ad"
           title={adData.title}
           description={adData.description}
-          publicationDate={adData.publicationDate}
-          photo={adData.photo}
+          data={adData.data}
+          image={adData.image}
           price={adData.price}
           location={adData.location}
-          seller={adData.seller}
+          infoSeller={adData.infoSeller}
           id={id}
         />
       </Col>
