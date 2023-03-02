@@ -5,7 +5,6 @@ const path = require("path");
 const app = express();
 const adsRoutes = require("./routes/ads.routes");
 const authRoutes = require("./routes/auth.routes");
-;
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
@@ -58,7 +57,6 @@ app.use("/auth", authRoutes);
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });
-
 
 app.use((req, res) => {
   res.status(404).json({ message: "404 not found..." });
