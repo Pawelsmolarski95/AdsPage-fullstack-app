@@ -11,7 +11,6 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(login, password, phone, avatar);
     const fd = new FormData();
     fd.append("login", login);
     fd.append("password", password);
