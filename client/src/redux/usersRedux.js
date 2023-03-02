@@ -1,16 +1,19 @@
-// selectors
 export const getUser = ({ user }) => user;
 
-// actions
-const createActionName = (actionName) => `app/users/${actionName}`;
-const LOG_IN = createActionName('LOG_IN');
-const LOG_OUT = createActionName('LOG_OUT');
+const reducerName = "users";
+const createActionName = (name) => `app/${reducerName}/${name}`;
 
-// action creators
+const LOG_IN = createActionName("LOG_IN");
+const LOG_OUT = createActionName("LOG_OUT");
+
 export const logIn = (payload) => ({ type: LOG_IN, payload });
-export const logOut = () => ({ type: LOG_OUT });
+export const logOut = (payload) => ({ type: LOG_OUT, payload });
 
-const usersReducer = (statePart = null, action) => {
+const initialState = {
+  user: null,
+};
+
+const usersReducer = (statePart = initialState, action) => {
   switch (action.type) {
     case LOG_IN:
       return action.payload;

@@ -25,48 +25,22 @@ exports.getById = async (req, res) => {
 
 exports.addAds = async (req, res) => {
   try {
-    const { title, description, data, price, location, infoSeller } = req.body;
-    const fileType = req.file ? await getImageFileType(req.file) : "unknown";
-    const user = req.session.user;
-    console.log(req.body)
-    if (
-      title &&
-      typeof title === "string" &&
-      description &&
-      typeof description === "string" &&
-      price &&
-      typeof price === "string" &&
-      req.file &&
-      ["image/jpeg", "image/png", "image/jpg"].includes(fileType) &&
-      location &&
-      typeof location === "string" &&
-      infoSeller &&
-      typeof infoSeller === "string" &&
-      title.length > 5 &&
-      title.length < 50 &&
-      description.length > 10 &&
-      description.length < 1000
-    ) {
-      const newAds = new Ads({
-        title: title,
-        description: description,
-        data: data,
-        price: price,
-        location: location,
-        infoSeller: infoSeller,
-        image: req.file ? req.file.filename : "unknown",
-        user: user.id,
-      });
+    const { title, description, date, price, location, user, phone} = req.body;
+    const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
+
+    if (title && description && date && req.file && ['image/png', 'image/jpeg', 'image/gif'].includes(fileType) && price && location && user) {
+      const newAds = new Ads({ title, description, date, image: req.file.filename, price, location, user, phone});
       await newAds.save();
-      res.json({ message: "Created ads:" + newAds.title });
+      res.json({ message: 'OK' });
     } else {
-      fs.unlinkSync(`./public/uploads/${req.file.filename}`);
-      res.status(400).json({ message: "Check your title and description" });
+      if (req.file) {
+        fs.unlinkSync(req.file.path);
+      }
+      res.status(400).send({ message: 'Bad request' });
     }
-  } catch (err) {
+  } catch(err) {
     res.status(500).json({ message: err });
-    fs.unlinkSync(`./public/uploads/${req.file.filename}`);
-  }
+  };
 };
 
 exports.removeAds = async (req, res) => {
@@ -111,14 +85,12 @@ exports.editAds = async (req, res) => {
 
 exports.findSearchAds = async (req, res) => {
   try {
-    const findPhraseAds = await Ads.find({ title: req.params.searchPhrase });
-    if (!findPhraseAds) {
-      res.status(404).json({ message: "Not found" });
-    } else {
-      res.json(findPhraseAds);
-      res.json({ message: "OK" });
-    }
+    const searchResult = await Ads.find({
+      title: { $regex: req.params.searchPhrase, $options: 'smi' },
+    });
+
+    res.json(searchResult);
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.messsage });
   }
 };

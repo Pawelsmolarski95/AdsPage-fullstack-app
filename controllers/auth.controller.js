@@ -5,38 +5,25 @@ const getImageFileType = require("../utlis/getImageFileType");
 
 exports.register = async (req, res) => {
   try {
-    const { login, password, phone } = req.body;
-    const fileType = req.file ? await getImageFileType(req.file) : "unknown";
 
-    if (
-      login &&
-      typeof login === "string" &&
-      password &&
-      typeof password === "string" &&
-      phone &&
-      typeof phone === "string" &&
-      req.file &&
-      ["image/jpeg", "image/png", "image/jpg"].includes(fileType)
-    ) {
+    const { login, password, phone } = req.body;
+    const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
+
+    if (login && typeof login === 'string' && password && typeof password === 'string' && phone && req.file && ['image/png', 'image/jpeg', 'image/gif'].includes(fileType)) {
+
       const userWithLogin = await User.findOne({ login });
       if (userWithLogin) {
-        fs.unlinkSync(`./public/uploads/${req.file.filename}`);
-        return res
-          .status(409)
-          .send({ message: "User with this login already exists" });
+        fs.unlinkSync(req.file.path);
+        return res.status(409).send({ message: 'User with this login already exists' });
       }
-      const newUser = await User.create({
-        login,
-        phone,
-        password: await bcrypt.hash(password, 10),
-        avatar: req.file.filename,
-      });
-      res.status(201).send({ message: "User created: " + newUser.login });
+      const user = new User({login, password: await bcrypt.hash(password, 10), phone, avatar: req.file.filename});
+      await user.save();
+      res.status(201).json({ message: 'User created ' + user.login });
     } else {
-      res.status(400).send({ message: "Bad request" });
+      res.status(400).send({ message: 'Bad request' });
     }
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).send({ message: err.message });
   }
 };
 

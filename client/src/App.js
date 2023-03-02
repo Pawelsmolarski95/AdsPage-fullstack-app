@@ -1,48 +1,39 @@
-import Home from './components/pages/Home/Home';
-import AdPage from './components/pages/AdPage/AdPage';
-import EditAdInfo from './components/pages/EditAdInfo/EditAdInfo';
-import AddAd from './components/pages/AddAd/AddAd';
-import AdRemove from './components/pages/AdRemove/AdRemove';
-import Search from './components/pages/Search/Search';
-import Login from './components/pages/Login/Login';
-import Register from './components/pages/Register/Register';
-import Logout from './components/pages/Logout/Logout';
-import ProfilePage from './components/pages/ProfilePage/ProfilePage';
-import NotFound from './components/pages/NotFound/NotFound';
-import Header from './components/views/Header';
-import Footer from './components/views/Footer/Footer';
-import Container from 'react-bootstrap/Container';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchData } from './redux/adsRedux';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import Footer from "./components/layout/Footer/Footer";
+import Header from "./components/layout/Header/Header";
+import HomePage from "./components/pages/Home/HomePage";
+import NotFound from "./components/pages/NotFound/NotFound";
+import Register from "./components/pages/Register/Register";
+import Login from "./components/pages/Login/Login";
+import Logout from "./components/pages/Logout/Logout";
+import AdAdd from "./components/features/AdAdd/AdAdd";
+import AdEdit from "./components/features/AdEdit/AdEdit";
+import AdRemove from "./components/features/AdRemove/AdRemove";
+import AdPage from "./components/features/AdPage/AdPage";
+import Search from "./components/features/Search/Search";
 
-const App = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => dispatch(fetchData()), [dispatch]);
-
+function App() {
   return (
     <main>
       <Header />
       <Container>
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/ad/:adId' element={<AdPage />} />
-          <Route path='/ad/edit/:adId' element={<EditAdInfo />} />
-          <Route path='/ad/add' element={<AddAd />} />
-          <Route path='/ad/remove/:adId' element={<AdRemove />} />
-          <Route path='/search/:searchPhrase' element={<Search />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/logout' element={<Logout />} />
-          <Route path='/profile' element={<ProfilePage />} />
-          <Route path='*' element={<NotFound />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/ad/:id" element={<AdPage />} />
+          <Route path="/ad/add" element={<AdAdd />} />
+          <Route path="/ad/edit/:id" element={<AdEdit />} />
+          <Route path="/ad/remove/:id" element={<AdRemove />} />
+          <Route path="/search/:searchPhrase" element={<Search />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </Container>
-      <Footer />
     </main>
   );
-};
+}
 
 export default App;

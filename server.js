@@ -5,6 +5,7 @@ const path = require("path");
 const app = express();
 const adsRoutes = require("./routes/ads.routes");
 const authRoutes = require("./routes/auth.routes");
+;
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
@@ -53,7 +54,8 @@ app.use(express.static(path.join(__dirname, "/client/build")));
 
 app.use(adsRoutes);
 app.use("/auth", authRoutes);
-app.use(express.static(path.join(__dirname, '/client/build')));
+
+
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.get("*", (req, res) => {

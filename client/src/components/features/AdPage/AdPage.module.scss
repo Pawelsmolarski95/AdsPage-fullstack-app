@@ -1,0 +1,20 @@
+@import "../../../styles/settings.scss";
+
+.card {
+  background-color: $color-dark;
+  color: $color-light;
+  padding: 1rem;
+}
+.price {
+  color: $color-favorite-icon;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-left: 1rem;
+}
+
+.title {
+  color: $color-warning;
+  font-size: 24px;
+  text-align: center;
+  
+}

@@ -1,0 +1,28 @@
+@import '../../../styles/settings.scss';
+
+.wrapper {
+  background-color: $color-dark !important;
+  border-style: none;
+  height: 100%;
+}
+
+.body {
+  height: 12rem;
+}
+
+.card_image {
+  height: 12rem;
+  object-fit: cover;
+}
+
+.span {
+  color: $color-favorite-icon;
+  font-size: 26px;
+  margin-left: 1rem ;
+}
+
+.title {
+  font-size: 26px;
+  color: $color-warning;
+  font-weight: 700;
+}

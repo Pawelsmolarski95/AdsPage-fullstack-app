@@ -1,18 +1,14 @@
-import React from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
-import Spinner from 'react-bootstrap/Spinner';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { API_URL } from '../../../config';
-import { logIn } from '../../../redux/usersRedux';
-import { useNavigate } from 'react-router-dom';
+import { Alert, Form, Button, Spinner } from "react-bootstrap";
+import { useState } from "react";
+import { API_URL } from "../../../config";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../../redux/usersRedux";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
-  const [status, setStatus] = useState(null); // null, 'loading, 'success', 'serverError', 'clientError'
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,93 +16,84 @@ const Login = () => {
     e.preventDefault();
 
     const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ login, password }),
     };
-    setStatus('loading');
+
+    setStatus("loading");
     fetch(`${API_URL}/auth/login`, options)
       .then((res) => {
         if (res.status === 200) {
-          setStatus('success');
+          setStatus("success");
           dispatch(logIn({ login }));
-          setTimeout(() => {
-            navigate('/');
-          }, 3000);
         } else if (res.status === 400) {
-          setStatus('clientError');
+          setStatus("clientError");
         } else {
-          setStatus('serverError');
+          setStatus("serverError");
         }
       })
       .catch((err) => {
-        setStatus('serverError');
+        setStatus("serverError");
       });
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
   };
 
-  return ( 
-    <Form className='col-12 col-sm-3 col-lg-5 mx-auto mt-3' onSubmit={handleSubmit}>
-      <h1 className='my-4 text-dark'>Login</h1>
-      <p className='mb-3 text-dark'>
-        For demo purpose you can just sign in with login: admin and password:
-        admin
-      </p>
-      {status === 'success' && (
-        <Alert variant='success'>
+  return (
+    <Form className="col-12 col-sm-3 mx-auto" onSubmit={handleSubmit}>
+      <h1 className="my-4">Login</h1>
+
+      {status === "success" && (
+        <Alert variant="success">
           <Alert.Heading>Success!</Alert.Heading>
-          <p>You have been successfully logged in!</p>
+          <p>You have been succesfully logged in!</p>
         </Alert>
       )}
 
-      {status === 'serverError' && (
-        <Alert variant='danger'>
+      {status === "serverError" && (
+        <Alert variant="danger">
           <Alert.Heading>Something went wrong...</Alert.Heading>
-          <p>Unexpected error.. Please try again!</p>
+          <p>Unexpected error... Try again!</p>
         </Alert>
       )}
 
-      {status === 'clientError' && (
-        <Alert variant='danger'>
+      {status === "clientError" && (
+        <Alert variant="danger">
           <Alert.Heading>Incorrect data</Alert.Heading>
-          <p>Login or password are incorrect.</p>
+          <p>Login or password are incorrect...</p>
         </Alert>
       )}
 
-      {status === 'loading' && (
-        <Spinner animation='border' role='status' className='d-block mx-auto'>
-          <span className='visually-hidden'>Loading...</span>
+      {status === "loading" && (
+        <Spinner animation="border" role="status" className="d-block mx-auto">
+          <span className="visually-hidden">Loading...</span>
         </Spinner>
       )}
-      {status !== 'success' && (
-        <Form.Group>
-          <Form.Group className='mb-3' controlId='formLogin'>
-            <Form.Label>Login</Form.Label>
-            <Form.Control
-              type='text'
-              value={login}
-              onChange={(e) => setLogin(e.target.value)}
-              placeholder='Enter login'
-            />
-          </Form.Group>
 
-          <Form.Group className='mb-3' controlId='formPassword'>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder='Password'
-            />
-          </Form.Group>
-
-          <Button variant='primary' type='submit'>
-            Sign in
-          </Button>
-        </Form.Group>
-      )}
+      <Form.Group className="mb-3" controlId="formLogin">
+        <Form.Label>Login</Form.Label>
+        <Form.Control
+          type="text"
+          value={login}
+          onChange={(e) => setLogin(e.target.value)}
+          placeholder="Enter Login"
+        ></Form.Control>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter Password"
+        ></Form.Control>
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Sign in
+      </Button>
     </Form>
   );
 };

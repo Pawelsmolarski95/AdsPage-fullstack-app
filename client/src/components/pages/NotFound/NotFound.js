@@ -1,9 +1,7 @@
+import { Alert } from "reactstrap";
+
 const NotFound = () => {
-  return (
-    <div>
-      <h1>NotFound page</h1>
-    </div>
-  );
+  return <Alert color="warning">Ups..not found</Alert>;
 };
 
 export default NotFound;
