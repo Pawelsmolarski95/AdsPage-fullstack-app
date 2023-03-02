@@ -1,6 +1,6 @@
 const fs = require("fs");
 const User = require("../models/user.model");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const getImageFileType = require("../utlis/getImageFileType");
 
 exports.register = async (req, res) => {
