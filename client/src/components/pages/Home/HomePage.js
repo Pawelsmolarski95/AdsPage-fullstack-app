@@ -25,7 +25,7 @@ const HomePage = () => {
         <Col className="d-flex ">
           <h2>Advertisements</h2>
         </Col>
-        <Col className="d-flex ">
+        <Col className="d-flex mb-1">
           {user && (
             <Link to={"ad/add"} style={{ textDecoration: "none" }}>
               <Button className="d-flex px-4  btn-success align-items-center">

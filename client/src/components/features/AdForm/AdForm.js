@@ -32,6 +32,7 @@ const AdForm = ({ action, actionText, ...props }) => {
   return (
     <Row className="justify-content-center">
       <Col md={5}>
+        <h2 className="text-center my-3">Add new advertisement</h2>
         <Form onSubmit={handleSubmit} style={{ width: "30rem" }}>
           <Form.Group className="mb-4">
             <Form.Label>Title</Form.Label>
@@ -47,7 +48,7 @@ const AdForm = ({ action, actionText, ...props }) => {
               className="mb-2"
               type="text"
               as='textarea'
-              rows='5'
+              rows='7'
               placeholder="Enter description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}

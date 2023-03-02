@@ -1,13 +1,16 @@
-@import '../../../styles/settings.scss';
+@import "../../../styles/settings.scss";
 
 nav {
-  background-color: darken($color-dark, 3%);
+  display: flex;
+  align-items: center;
 }
 
 .logo {
   text-decoration: none;
   color: $color-light;
   letter-spacing: 1px;
+  margin-left: 10px;
+  margin-right: 440px;
   &:hover {
     color: $color-light;
   }
@@ -18,32 +21,8 @@ nav {
   }
 }
 
-.nav_wrapper {
-  font-size: $base-size * 1.5;
-  font-weight: bold;
-  margin: 0 ($base-size * 10);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: $base-size;
-}
-
-.nav_list {
-  list-style: none;
-  display: inline-flex;
-  margin: 0;
-  
-  li {
-    padding: $base-size;
-    letter-spacing: 2px;
-    font-weight: 400;
-  }
-
-  a {
-    text-decoration: none;
-    color: $color-light;
-  }
-  a.linkActive {
-    color: $color-warning;
+@media only screen and (max-width: 768px) {
+  .logo {
+    margin-right: 0;
   }
 }

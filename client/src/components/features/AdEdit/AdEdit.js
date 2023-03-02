@@ -37,7 +37,7 @@ const AdEdit = () => {
   return (
     <Row className="justify-content-center">
       <Col md={6}>
-        <h2>Edit Ad</h2>
+        <h2 className="text-center mt-3">Edit Ad</h2>
         <AdForm
           action={handleSubmit}
           actionText="Edit ad"
