@@ -49,16 +49,16 @@ app.use(
     },
   })
 );
+app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.use(adsRoutes);
 app.use("/auth", authRoutes);
 
-app.use(express.static(path.join(__dirname, '/public')));
-
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });
-app.use(express.static(path.join(__dirname, "/client/build")));
+
 
 app.use((req, res) => {
   res.status(404).json({ message: "404 not found..." });
