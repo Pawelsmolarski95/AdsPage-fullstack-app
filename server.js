@@ -8,6 +8,8 @@ const authRoutes = require("./routes/auth.routes");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
+
+
 mongoose.connect(
   "mongodb+srv://pawelsmolarski95:pawel@adsapp.kqdalg2.mongodb.net/?retryWrites=true&w=majority",
   { useNewUrlParser: true }
@@ -48,7 +50,7 @@ app.use(
     },
   })
 );
-app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.use(adsRoutes);

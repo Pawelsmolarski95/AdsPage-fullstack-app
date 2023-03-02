@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.22.19/libexec/bin/yarn.js add bcryptjs
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.22.19/libexec/bin/yarn.js install
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: EACCES: permission denied, mkdir '/Users/mac/Documents/Projects/AdsPage-fullstack-app/node_modules/@mapbox/node-pre-gyp/node_modules'
+  Error: EACCES: permission denied, mkdir '/Users/mac/Documents/Projects/AdsPage-fullstack-app/node_modules/nopt/examples'
 
 npm manifest: 
   {
@@ -23,8 +23,8 @@ npm manifest:
     "main": "index.js",
     "license": "MIT",
     "dependencies": {
-      "bcrypt": "^5.1.0",
       "connect-mongo": "^4.6.0",
+      "bcryptjs": "^2.4.3",
       "cors": "^2.8.5",
       "express": "^4.18.2",
       "express-session": "^1.17.3",
@@ -897,6 +897,11 @@ Lockfile:
     dependencies:
       "@mapbox/node-pre-gyp" "^1.0.10"
       node-addon-api "^5.0.0"
+  
+  bcryptjs@^2.4.3:
+    version "2.4.3"
+    resolved "https://registry.npmjs.org/bcryptjs/-/bcryptjs-2.4.3.tgz"
+    integrity sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==
   
   binary-extensions@^2.0.0:
     version "2.2.0"
